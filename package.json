@@ -1,0 +1,31 @@
+{
+  "name": "mvs-blockchain",
+  "version": "0.1.0",
+  "description": "Metaverse Blockchain adapter",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -t 30000 test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/canguruhh/mvs-blockchain-js.git"
+  },
+  "keywords": [
+    "metaverse",
+    "blockchain"
+  ],
+  "author": "Sven Mutzl",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/canguruhh/mvs-blockchain-js/issues"
+  },
+  "homepage": "https://github.com/canguruhh/mvs-blockchain-js#readme",
+  "dependencies": {
+    "superagent": "^3.8.2"
+  },
+  "devDependencies": {
+    "assert": "^1.4.1",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1"
+  }
+}
