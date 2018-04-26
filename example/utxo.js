@@ -1,4 +1,4 @@
-let blockchain = require('.')({url: "https://explorer.mvs.org/api/"});
+let blockchain = require('..')({url: "https://explorer.mvs.org/api/"});
 
 var target={'MVS.ZGC': 13, etp: 1000};
 
