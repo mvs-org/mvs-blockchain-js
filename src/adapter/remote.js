@@ -85,8 +85,6 @@ function listAddressUtxo(address) {
             let candidates={};
             for(let i=result.transactions.length-1; i>=0; i--){
                 //Search received outputs
-                if(result.transactions[i].hash=="b076ba7c6667803f166c3e012bcc480cb5c57238f72ba99c51b13070758ce4ce")
-                    console.log(result.transactions[i])
                 result.transactions[i].outputs.forEach((output)=>{
                     if(output.address==address){
                         output.locked_until=(output.locked_height_range)?result.transactions[i].height+output.locked_height_range:0;
@@ -99,7 +97,7 @@ function listAddressUtxo(address) {
                 result.transactions[i].inputs.forEach((input)=>{
                     if(input.address==address){
                         if(candidates[input.previous_output.hash+'-'+input.previous_output.index]){
-                            candidates[input.previous_output.hash+'-'+input.previous_output.index];
+                            delete candidates[input.previous_output.hash+'-'+input.previous_output.index];
                         }
                         else throw Error('Found input without matching output');
                     }
