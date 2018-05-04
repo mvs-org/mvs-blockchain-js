@@ -14,7 +14,7 @@ Metaverse.wallet.fromMnemonic("lunar there win define minor shadow damage lounge
     .then((wallet)=>{
         blockchain.addresses.utxo(wallet.getAddresses())//Get all utxo
             .then((utxos) => Metaverse.transaction_builder.findUtxo(utxos, target)) //Collect utxo for given target
-            .then((result) => Metaverse.transaction_builder.send(result.utxo, recipient_address, result.target, change_address, result.change))
+            .then((result) => Metaverse.transaction_builder.send(result.utxo, recipient_address, result.target, change_address, result.change, Metaverse.transaction.DEFAULT_FEE))
             .then((tx)=>wallet.sign(tx))
             .then((tx)=>tx.encode())
             .then(tx => console.log(tx.toString('hex')));
