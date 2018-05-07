@@ -31,6 +31,7 @@ module.exports = (url) => {
     else
         REMOTE = 'https://explorer.mvs.org/api/';
     return {
+        height: getHeight,
         transaction: {
             get: getTx,
             list: listTxs
@@ -53,6 +54,10 @@ module.exports = (url) => {
         }
     };
 };
+
+function getHeight() {
+    return get(`${REMOTE}height`);
+}
 
 function getTx(hash) {
     return get(`${REMOTE}tx/${hash}`);
