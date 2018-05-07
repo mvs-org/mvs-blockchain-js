@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/canguruhh/mvs-blockchain-js#readme",
   "dependencies": {
-    "metaversejs": "^0.2.36",
+    "metaversejs": "^0.2.37",
     "superagent": "^3.8.2"
   },
   "devDependencies": {
