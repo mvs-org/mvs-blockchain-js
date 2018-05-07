@@ -1,4 +1,5 @@
-const Request = require("superagent");
+const Request = require("superagent"),
+ helper = require("../helper.js");
 
 function get(url, parameters) {
     return new Promise((resolve, reject) => {
@@ -51,6 +52,10 @@ module.exports = (url) => {
         asset: {
             get: getAsset,
             list: listAssets
+        },
+        balance:{
+            all: helper.balances.all,
+            addresses: helper.balances.addresses
         }
     };
 };
