@@ -24,6 +24,29 @@ function get(url, parameters) {
     });
 }
 
+function post(url, data) {
+    return new Promise((resolve, reject) => {
+        return Request.post(url)
+            .send(data)
+            .set('accept', 'json')
+            .end((err, response) => {
+                try {
+                    response = JSON.parse(response.text);
+                } catch (e) {}
+                if (err) {
+                    reject(Error(err.message));
+                } else if (response.error != undefined)
+                    reject({
+                        name: response.error.code,
+                        message: response.error.message
+                    });
+                else {
+                    resolve(response.result);
+                }
+            });
+    });
+}
+
 let REMOTE = null;
 
 module.exports = (url) => {
@@ -35,7 +58,8 @@ module.exports = (url) => {
         height: getHeight,
         transaction: {
             get: getTx,
-            list: listTxs
+            list: listTxs,
+            broadcast: broadcastTx
         },
         block: {
             get: getBlock,
@@ -70,6 +94,10 @@ function getTx(hash) {
 
 function listTxs(page = 0, items_per_page = 10) {
     return get(`${REMOTE}txs?page=${page}`);
+}
+
+function broadcastTx(tx){
+    return post(`${REMOTE}tx`,{tx:tx});
 }
 
 function getBlock(hash) {

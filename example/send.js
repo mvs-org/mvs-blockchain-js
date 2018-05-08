@@ -7,7 +7,7 @@ var target = {
     ETP: 100000
 };
 
-var recipient_address="MDyq6w7RqXPF9F5SSrKpTrharr8wF1D4gX";
+var recipient_address="MBHn7XNNokJZXmiupDPT6PLWzvVJVXi2Kg";
 var change_address="MKXYH2MhpvA3GU7kMk8y3SoywGnyHEj5SB";
 
 Metaverse.wallet.fromMnemonic("lunar there win define minor shadow damage lounge bitter abstract sail alcohol yellow left lift vapor tourist rent gloom sustain gym dry congress zero")
@@ -17,6 +17,7 @@ Metaverse.wallet.fromMnemonic("lunar there win define minor shadow damage lounge
             .then((result) => Metaverse.transaction_builder.send(result.utxo, recipient_address, target, change_address, result.change))
             .then((tx)=>wallet.sign(tx))
             .then((tx)=>tx.encode())
-            .then(tx => console.log(tx.toString('hex')));
+            .then((tx)=>blockchain.transaction.broadcast(tx.toString('hex')))
+            .then(console.log);
     })
     .catch(console.error);
