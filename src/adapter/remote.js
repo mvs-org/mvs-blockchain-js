@@ -1,52 +1,6 @@
 const Request = require("superagent"),
  helper = require("../helper.js");
 
-function get(url, parameters) {
-    return new Promise((resolve, reject) => {
-        return Request.get(url)
-            .send()
-            .set('accept', 'json')
-            .end((err, response) => {
-                try {
-                    response = JSON.parse(response.text);
-                } catch (e) {}
-                if (err) {
-                    reject(Error(err.message));
-                } else if (response.error != undefined)
-                    reject({
-                        name: response.error.code,
-                        message: response.error.message
-                    });
-                else {
-                    resolve(response.result);
-                }
-            });
-    });
-}
-
-function post(url, data) {
-    return new Promise((resolve, reject) => {
-        return Request.post(url)
-            .send(data)
-            .set('accept', 'json')
-            .end((err, response) => {
-                try {
-                    response = JSON.parse(response.text);
-                } catch (e) {}
-                if (err) {
-                    reject(Error(err.message));
-                } else if (response.error != undefined)
-                    reject({
-                        name: response.error.code,
-                        message: response.error.message
-                    });
-                else {
-                    resolve(response.result);
-                }
-            });
-    });
-}
-
 let REMOTE = null;
 
 module.exports = (url) => {
@@ -117,12 +71,20 @@ function listAssets() {
     return get(`${REMOTE}assets`);
 }
 
-function listAddressTxs(address, page = 0, items_per_page = 10) {
-    return get(`${REMOTE}address/txs/${address}?page=${page}&items_per_page=${items_per_page}`);
+function listAddressTxs(address, options) {
+    return listAllAddressesTxs([address],options);
 }
 
-function listAllAddressesTxs(addresses) {
+function listAllAddressesTxs(addresses, options = {}) {
     let url = `${REMOTE}addresses/txs?addresses=`+addresses.join('&addresses=');
+    if(options.max_height)
+        url+='&max_height='+options.max_height;
+    if(options.min_height)
+        url+='&min_height='+options.min_height;
+    if(options.max_time)
+        url+='&max_time='+options.max_time;
+    if(options.min_time)
+        url+='&min_time='+options.min_time;
     return get(url);
 }
 
@@ -159,5 +121,51 @@ function calculateUtxo(txs, addresses) {
             });
         }
         resolve(Object.values(candidates));
+    });
+}
+
+function get(url, parameters) {
+    return new Promise((resolve, reject) => {
+        return Request.get(url)
+            .send()
+            .set('accept', 'json')
+            .end((err, response) => {
+                try {
+                    response = JSON.parse(response.text);
+                } catch (e) {}
+                if (err) {
+                    reject(Error(err.message));
+                } else if (response.error != undefined)
+                    reject({
+                        name: response.error.code,
+                        message: response.error.message
+                    });
+                else {
+                    resolve(response.result);
+                }
+            });
+    });
+}
+
+function post(url, data) {
+    return new Promise((resolve, reject) => {
+        return Request.post(url)
+            .send(data)
+            .set('accept', 'json')
+            .end((err, response) => {
+                try {
+                    response = JSON.parse(response.text);
+                } catch (e) {}
+                if (err) {
+                    reject(Error(err.message));
+                } else if (response.error != undefined)
+                    reject({
+                        name: response.error.code,
+                        message: response.error.message
+                    });
+                else {
+                    resolve(response.result);
+                }
+            });
     });
 }

@@ -76,8 +76,8 @@ function calculateAddressesBalances(transactions, addresses, height, init) {
                             available: 0,
                             frozen: 0
                         };
+                    acc[input.address]['ETP'].available -= input.value;
                 }
-                acc[input.address]['ETP'].available -= input.value;
             }
         });
         tx.outputs.forEach((output) => {
