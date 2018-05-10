@@ -10,7 +10,7 @@ deploy:
   email: canguruhh@mutzl.org
   on:
     branch: master
-    repo: canguruhh/mvs-blockchain
+    repo: canguruhh/mvs-blockchain-js
     tag: latest
   api_key:
     secure: IF/60q1rl7vZZOcFjsnEiv/TD6aQT+iU3ALTMs50FW+jVRam2ObLUwOv4UbcQ4pJZD3vNwGZLpC288dv6z5070qdnCVmtdTy413AzOJ4KbmS6XdxgxbkyUTC0V5E1GUstgwZ5BjWBZC2LOg7G7blQwJmzIdErgJhJSsAYF2umeqvK2NTE7b/zG8+yOshtjU+B+P80X6iK1UqPMutyyuHrkhHZA0uWbgjMVBhAh2bwiCEv7mtOu7MP+B/mjSjff/6aPOU+yUwH8AaJ5MwmWQSsJAtdQiM4iEurUIXFsCjnEpun30BKXnvTUY7pfiO6nvdwqwz2eD4vZEvoiWvxqdAjzwSxOZx6vQxVxMRTMKDmX7Fg2ZXY8JuD0JPlqYmNzvsAJ8xrBuljFs6T1Lcaxw+mq0k1u6qevOHiSPuveBzLOpoIxcXsr0jydQGEDsYIZkkiJZYkzao71OUcF2bv0M1NE7lvtyvwX8WgyYveMb9+yPY93EjdmIeaKLVvdgBIEol/06B/8/NLmYI3ARkrk/rVNfJcr0Xl9kT+oXMaJFB9EIXthnMBQYcMjUu1nesHTJPblJtc/oAi9GWGPkmx6jg04bELaNhqkZMOmuPYCEims7agCgvx4Xr3sdwOf1W7Q0mSVUJiErTq3OFVJ3BJpCozdfuIqDDtUCcjn7H22Jv26E=
