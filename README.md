@@ -19,7 +19,7 @@ npm install mvs-blockchain
 ## Setup
 ### NodeJS
 ``` javascript
-let Blockchain = require(mvs-blockchain')();
+let Blockchain = require('mvs-blockchain')();
 ```
 <a href="https://nodei.co/npm/mvs-blockchain/"><img src="https://nodei.co/npm/mvs-blockchain.png?downloads=true&downloadRank=true&stars=true"></a>
 ### Browser
