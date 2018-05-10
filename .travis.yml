@@ -2,15 +2,15 @@ language: node_js
 node_js:
 - '8'
 before_script:
-  - npm install grunt-cli -g
+- npm install grunt-cli -g
 before_deploy:
-  - grunt
+- grunt
 deploy:
   provider: npm
   email: canguruhh@mutzl.org
   on:
     branch: master
-    repo: canguruhh/mvs-blockchain-js
+    repo: canguruhh/mvs-blockchain
     tag: latest
   api_key:
-    secure: iodPtbnGARU94L48cjrLjH343/i1zKroaVK19ZyahSiBkqICvO50fwtRzU/p+692CNWt2UvZn57qgQ9FEbjM5ApPiwmMUon6vb4lrDSv8mo5pqEQkSF8YFlobZLR7jjD1hvvbAXaztR0tOtSInoxRaXQkNJzPzYAqp9cdWC/lrGjhSLQ3Owr72Vd9DrsQKAGV79U8w1eS4+zXf0bzuC2gocLzosEDFNS71K7NfDbkTCmm9oVqISTLXssP6/k5CtW9sNAzmA3IxtlRNI1KJ7cNLE1qOUxkHe/97pj3w6lGGJTFsYYIAaVAYix2y+G90vdiU+TlglGHUIN3IGkudeEBZ9WFtA505dfmyW3ZSzY9iIKjgd1aAviiolg9CSMNGuGx98othNAY2qYq6N40MIWRP/E0/WJPvBt9EHl6xkbAtLgigaounXUQDTwIHh5xgf4Ujh3laClRvCqewfi6H2jd3lNgNGpw+8ykWs5OQcHQKVu+xs3Hahwfz6iQ09vgUfZ/C1IgiDFtorsgrQAjQxr+AblJuyf/LBd8RGQdEHHmGfvTp4Q3seAQTPp0j2RrBW6ToLIDjDt45SDPAi3o+Cj+AWPjDCSw0uN43ASG2SKVDkskyft9E7H2rL3OIahO+OA+8GeA+TTV8Iia7TvyjJcn2sMU/OnKrdxIMfGzVlvgz0=
+    secure: IF/60q1rl7vZZOcFjsnEiv/TD6aQT+iU3ALTMs50FW+jVRam2ObLUwOv4UbcQ4pJZD3vNwGZLpC288dv6z5070qdnCVmtdTy413AzOJ4KbmS6XdxgxbkyUTC0V5E1GUstgwZ5BjWBZC2LOg7G7blQwJmzIdErgJhJSsAYF2umeqvK2NTE7b/zG8+yOshtjU+B+P80X6iK1UqPMutyyuHrkhHZA0uWbgjMVBhAh2bwiCEv7mtOu7MP+B/mjSjff/6aPOU+yUwH8AaJ5MwmWQSsJAtdQiM4iEurUIXFsCjnEpun30BKXnvTUY7pfiO6nvdwqwz2eD4vZEvoiWvxqdAjzwSxOZx6vQxVxMRTMKDmX7Fg2ZXY8JuD0JPlqYmNzvsAJ8xrBuljFs6T1Lcaxw+mq0k1u6qevOHiSPuveBzLOpoIxcXsr0jydQGEDsYIZkkiJZYkzao71OUcF2bv0M1NE7lvtyvwX8WgyYveMb9+yPY93EjdmIeaKLVvdgBIEol/06B/8/NLmYI3ARkrk/rVNfJcr0Xl9kT+oXMaJFB9EIXthnMBQYcMjUu1nesHTJPblJtc/oAi9GWGPkmx6jg04bELaNhqkZMOmuPYCEims7agCgvx4Xr3sdwOf1W7Q0mSVUJiErTq3OFVJ3BJpCozdfuIqDDtUCcjn7H22Jv26E=
