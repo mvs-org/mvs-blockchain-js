@@ -14,7 +14,8 @@ function calculateBalances(transactions, addresses, height, init) {
                     if (acc[input.attachment.symbol] == undefined)
                         acc[input.attachment.symbol] = {
                             available: 0,
-                            frozen: 0
+                            frozen: 0,
+                            decimals: input.attachment.decimals
                         };
                     acc[input.attachment.symbol].available -= input.attachment.quantity;
                 }
@@ -22,7 +23,8 @@ function calculateBalances(transactions, addresses, height, init) {
                     if (acc['ETP'] == undefined)
                         acc['ETP'] = {
                             available: 0,
-                            frozen: 0
+                            frozen: 0,
+                            decimals: 8
                         };
                 }
                 acc['ETP'].available -= input.value;
@@ -34,7 +36,8 @@ function calculateBalances(transactions, addresses, height, init) {
                     if (acc[output.attachment.symbol] == undefined)
                         acc[output.attachment.symbol] = {
                             available: 0,
-                            frozen: 0
+                            frozen: 0,
+                            decimals: output.attachment.decimals
                         };
                     acc[output.attachment.symbol].available += output.attachment.quantity;
                 }
@@ -42,7 +45,8 @@ function calculateBalances(transactions, addresses, height, init) {
                     if (acc['ETP'] == undefined)
                         acc['ETP'] = {
                             available: 0,
-                            frozen: 0
+                            frozen: 0,
+                            decimals: 8
                         };
                     if (output.locked_height_range + tx.height < height)
                         acc['ETP'].available += output.value;
@@ -66,7 +70,8 @@ function calculateAddressesBalances(transactions, addresses, height, init) {
                     if (acc[input.address][input.attachment.symbol] == undefined)
                         acc[input.address][input.attachment.symbol] = {
                             available: 0,
-                            frozen: 0
+                            frozen: 0,
+                            decimals: input.attachment.decimals
                         };
                     acc[input.address][input.attachment.symbol].available -= input.attachment.quantity;
                 }
@@ -74,7 +79,8 @@ function calculateAddressesBalances(transactions, addresses, height, init) {
                     if (acc[input.address]['ETP'] == undefined)
                         acc[input.address]['ETP'] = {
                             available: 0,
-                            frozen: 0
+                            frozen: 0,
+                            decimals: 8
                         };
                     acc[input.address]['ETP'].available -= input.value;
                 }
@@ -88,7 +94,8 @@ function calculateAddressesBalances(transactions, addresses, height, init) {
                     if (acc[output.address][output.attachment.symbol] == undefined)
                         acc[output.address][output.attachment.symbol] = {
                             available: 0,
-                            frozen: 0
+                            frozen: 0,
+                            decimals: output.attachment.decimals
                         };
                     acc[output.address][output.attachment.symbol].available += output.attachment.quantity;
                 }
@@ -96,7 +103,8 @@ function calculateAddressesBalances(transactions, addresses, height, init) {
                     if (acc[output.address]['ETP'] == undefined)
                         acc[output.address]['ETP'] = {
                             available: 0,
-                            frozen: 0
+                            frozen: 0,
+                            decimals: 8
                         };
                     if (output.locked_height_range + tx.height < height)
                         acc[output.address]['ETP'].available += output.value;
