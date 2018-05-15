@@ -32,7 +32,7 @@ function calculateBalances(transactions, addresses, height, init) {
         });
         tx.outputs.forEach((output) => {
             if (addresses.indexOf(output.address) !== -1) {
-                if (output.attachment && output.attachment.type == 'asset-transfer') {
+                if (output.attachment && (output.attachment.type == 'asset-transfer' || output.attachment.type == 'asset-issue')) {
                     if (acc[output.attachment.symbol] == undefined)
                         acc[output.attachment.symbol] = {
                             available: 0,
@@ -90,7 +90,7 @@ function calculateAddressesBalances(transactions, addresses, height, init) {
             if (acc[output.address] == undefined)
                 acc[output.address] = {};
             if (addresses.indexOf(output.address) !== -1) {
-                if (output.attachment && output.attachment.type == 'asset-transfer') {
+                if (output.attachment && (output.attachment.type == 'asset-transfer' || output.attachment.type == 'asset-issue')) {
                     if (acc[output.address][output.attachment.symbol] == undefined)
                         acc[output.address][output.attachment.symbol] = {
                             available: 0,
