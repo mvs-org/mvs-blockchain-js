@@ -48,7 +48,7 @@ function calculateBalances(transactions, addresses, height, init) {
                             frozen: 0,
                             decimals: 8
                         };
-                    if (output.locked_height_range + tx.height < height)
+                    if (output.locked_height_range + tx.height <= height)
                         acc['ETP'].available += output.value;
                     else
                         acc['ETP'].frozen += output.value;
