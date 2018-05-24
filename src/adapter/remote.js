@@ -25,6 +25,9 @@ module.exports = (url) => {
         addresses: {
             txs: listAllAddressesTxs
         },
+        avatar: {
+            extract: helper.avatar.extract
+        },
         asset: {
             get: getAsset,
             list: listAssets

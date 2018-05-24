@@ -2,11 +2,27 @@ module.exports = {
     balances: {
         all: calculateBalances,
         addresses: calculateAddressesBalances
+    },
+    avatar: {
+       extract : extractAvatars
     }
 };
 
+function extractAvatars(outputs) {
+    return new Promise(resolve => {
+        let avatars = [];
+        outputs.forEach((output) => {
+            if (output.attachment.type == 'did-issue') avatars.push({
+                symbol: output.attachment.symbol,
+                address: output.attachment.address
+            });
+        });
+        resolve(avatars);
+    });
+}
+
 function calculateBalances(transactions, addresses, height, init) {
-    if(init==undefined) init={};
+    if (init == undefined) init = {};
     return transactions.reduce((acc, tx) => {
         tx.inputs.forEach((input) => {
             if (addresses.indexOf(input.address) !== -1) {
@@ -60,7 +76,7 @@ function calculateBalances(transactions, addresses, height, init) {
 }
 
 function calculateAddressesBalances(transactions, addresses, height, init) {
-    if(init==undefined) init={};
+    if (init == undefined) init = {};
     return transactions.reduce((acc, tx) => {
         tx.inputs.forEach((input) => {
             if (acc[input.address] == undefined)
