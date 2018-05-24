@@ -120,17 +120,14 @@ function post(url, data) {
             .end((err, response) => {
                 try {
                     response = JSON.parse(response.text);
+                    if (err) {
+                        reject(Error(err.message));
+                    } else if (response.result.error != undefined)
+                        reject(Error(response.result.error));
+                    else {
+                        resolve(response.result);
+                    }
                 } catch (e) {}
-                if (err) {
-                    reject(Error(err.message));
-                } else if (response.error != undefined)
-                    reject({
-                        name: response.error.code,
-                        message: response.error.message
-                    });
-                else {
-                    resolve(response.result);
-                }
             });
     });
 }
