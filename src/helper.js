@@ -48,10 +48,10 @@ function calculateBalances(transactions, addresses, height, init) {
                             frozen: 0,
                             decimals: 8
                         };
-                    if (output.locked_height_range + tx.height <= height)
-                        acc['ETP'].available += output.value;
-                    else
+                    if (output.locked_height_range && output.locked_height_range + tx.height > height)
                         acc['ETP'].frozen += output.value;
+                    else
+                        acc['ETP'].available += output.value;
                 }
             }
         });
@@ -106,10 +106,10 @@ function calculateAddressesBalances(transactions, addresses, height, init) {
                             frozen: 0,
                             decimals: 8
                         };
-                    if (output.locked_height_range + tx.height < height)
-                        acc[output.address]['ETP'].available += output.value;
-                    else
+                    if (output.locked_height_range && output.locked_height_range + tx.height > height)
                         acc[output.address]['ETP'].frozen += output.value;
+                    else
+                        acc[output.address]['ETP'].available += output.value;
                 }
             }
         });

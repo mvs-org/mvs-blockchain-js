@@ -1,6 +1,6 @@
 {
   "name": "mvs-blockchain",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "Metaverse Blockchain adapter",
   "main": "index.js",
   "scripts": {
