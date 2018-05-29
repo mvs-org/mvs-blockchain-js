@@ -4,7 +4,7 @@ module.exports = {
         addresses: calculateAddressesBalances
     },
     avatar: {
-       extract : extractAvatars
+        extract: extractAvatars
     }
 };
 
@@ -42,8 +42,8 @@ function calculateBalances(transactions, addresses, height, init) {
                             frozen: 0,
                             decimals: 8
                         };
+                    acc['ETP'].available -= input.value;
                 }
-                acc['ETP'].available -= input.value;
             }
         });
         tx.outputs.forEach((output) => {
