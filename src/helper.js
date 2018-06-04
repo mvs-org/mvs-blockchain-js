@@ -22,26 +22,27 @@ function extractAvatars(outputs) {
 }
 
 function calculateBalances(transactions, addresses, height, init) {
-    if (init == undefined) init = {};
+    if (init == undefined) init = {
+        ETP: {
+            available: 0,
+            frozen: 0,
+            decimals: 8
+        },
+        MST: {}
+    };
     return transactions.reduce((acc, tx) => {
         tx.inputs.forEach((input) => {
             if (addresses.indexOf(input.address) !== -1) {
                 if (input.attachment && input.attachment.symbol && input.attachment.quantity) {
-                    if (acc[input.attachment.symbol] == undefined)
-                        acc[input.attachment.symbol] = {
+                    if (acc['MST'][input.attachment.symbol] == undefined)
+                        acc['MST'][input.attachment.symbol] = {
                             available: 0,
                             frozen: 0,
                             decimals: input.attachment.decimals
                         };
-                    acc[input.attachment.symbol].available -= input.attachment.quantity;
+                    acc['MST'][input.attachment.symbol].available -= input.attachment.quantity;
                 }
                 if (input.value) {
-                    if (acc['ETP'] == undefined)
-                        acc['ETP'] = {
-                            available: 0,
-                            frozen: 0,
-                            decimals: 8
-                        };
                     acc['ETP'].available -= input.value;
                 }
             }
@@ -49,21 +50,15 @@ function calculateBalances(transactions, addresses, height, init) {
         tx.outputs.forEach((output) => {
             if (addresses.indexOf(output.address) !== -1) {
                 if (output.attachment && (output.attachment.type == 'asset-transfer' || output.attachment.type == 'asset-issue')) {
-                    if (acc[output.attachment.symbol] == undefined)
-                        acc[output.attachment.symbol] = {
+                    if (acc['MST'][output.attachment.symbol] == undefined)
+                        acc['MST'][output.attachment.symbol] = {
                             available: 0,
                             frozen: 0,
                             decimals: output.attachment.decimals
                         };
-                    acc[output.attachment.symbol].available += output.attachment.quantity;
+                    acc['MST'][output.attachment.symbol].available += output.attachment.quantity;
                 }
                 if (output.value) {
-                    if (acc['ETP'] == undefined)
-                        acc['ETP'] = {
-                            available: 0,
-                            frozen: 0,
-                            decimals: 8
-                        };
                     if (output.locked_height_range && output.locked_height_range + tx.height > height)
                         acc['ETP'].frozen += output.value;
                     else
@@ -80,48 +75,50 @@ function calculateAddressesBalances(transactions, addresses, height, init) {
     return transactions.reduce((acc, tx) => {
         tx.inputs.forEach((input) => {
             if (acc[input.address] == undefined)
-                acc[input.address] = {};
+                acc[input.address] = {
+                    MST: {},
+                    ETP: {
+                        available: 0,
+                        frozen: 0,
+                        decimals: 8
+                    }
+                };
             if (addresses.indexOf(input.address) !== -1) {
                 if (input.attachment && input.attachment.symbol && input.attachment.quantity) {
-                    if (acc[input.address][input.attachment.symbol] == undefined)
-                        acc[input.address][input.attachment.symbol] = {
+                    if (acc[input.address]['MST'][input.attachment.symbol] == undefined)
+                        acc[input.address]['MST'][input.attachment.symbol] = {
                             available: 0,
                             frozen: 0,
                             decimals: input.attachment.decimals
                         };
-                    acc[input.address][input.attachment.symbol].available -= input.attachment.quantity;
+                    acc[input.address]['MST'][input.attachment.symbol].available -= input.attachment.quantity;
                 }
                 if (input.value) {
-                    if (acc[input.address]['ETP'] == undefined)
-                        acc[input.address]['ETP'] = {
-                            available: 0,
-                            frozen: 0,
-                            decimals: 8
-                        };
                     acc[input.address]['ETP'].available -= input.value;
                 }
             }
         });
         tx.outputs.forEach((output) => {
             if (acc[output.address] == undefined)
-                acc[output.address] = {};
+                acc[output.address] = {
+                    MST: {},
+                    ETP: {
+                        available: 0,
+                        frozen: 0,
+                        decimals: 8
+                    }
+                };
             if (addresses.indexOf(output.address) !== -1) {
                 if (output.attachment && (output.attachment.type == 'asset-transfer' || output.attachment.type == 'asset-issue')) {
-                    if (acc[output.address][output.attachment.symbol] == undefined)
-                        acc[output.address][output.attachment.symbol] = {
+                    if (acc[output.address]['MST'][output.attachment.symbol] == undefined)
+                        acc[output.address]['MST'][output.attachment.symbol] = {
                             available: 0,
                             frozen: 0,
                             decimals: output.attachment.decimals
                         };
-                    acc[output.address][output.attachment.symbol].available += output.attachment.quantity;
+                    acc[output.address]['MST'][output.attachment.symbol].available += output.attachment.quantity;
                 }
                 if (output.value) {
-                    if (acc[output.address]['ETP'] == undefined)
-                        acc[output.address]['ETP'] = {
-                            available: 0,
-                            frozen: 0,
-                            decimals: 8
-                        };
                     if (output.locked_height_range && output.locked_height_range + tx.height > height)
                         acc[output.address]['ETP'].frozen += output.value;
                     else

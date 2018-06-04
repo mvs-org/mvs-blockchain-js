@@ -9,7 +9,7 @@ Metaverse.wallet.fromMnemonic("lunar there win define minor shadow damage lounge
         .then((height) => {
             blockchain.addresses.txs(wallet.getAddresses()) //Get transactions
                 .then((txs) => blockchain.balance.addresses(txs.transactions, wallet.getAddresses(), height)) //
-                .then(console.log);
+                .then(balances=>console.log(JSON.stringify(balances)));
         })
     )
     .catch(console.error);
