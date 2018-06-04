@@ -1,7 +1,15 @@
+const Metaverse = require('metaversejs');
+
 module.exports = {
     balances: {
-        all: calculateBalances,
-        addresses: calculateAddressesBalances
+        all: {
+            from_tx: calculateBalances,
+            from_utxo: calculateBalancesFromUtxo
+        },
+        addresses: {
+            from_tx: calculateAddressesBalances,
+            from_utxo: calculateAddressesBalancesFromUtxo
+        }
     },
     avatar: {
         extract: extractAvatars
@@ -56,7 +64,9 @@ function calculateBalances(transactions, addresses, height, init) {
                             frozen: 0,
                             decimals: output.attachment.decimals
                         };
-                    acc['MST'][output.attachment.symbol].available += output.attachment.quantity;
+                    let available = Metaverse.output.assetSpendable(output, tx.height, height);
+                    acc['MST'][output.attachment.symbol].available += available;
+                    acc['MST'][output.attachment.symbol].frozen += output.attachment.quantity - available;
                 }
                 if (output.value) {
                     if (output.locked_height_range && output.locked_height_range + tx.height > height)
@@ -116,7 +126,9 @@ function calculateAddressesBalances(transactions, addresses, height, init) {
                             frozen: 0,
                             decimals: output.attachment.decimals
                         };
-                    acc[output.address]['MST'][output.attachment.symbol].available += output.attachment.quantity;
+                    let available = Metaverse.output.assetSpendable(output, tx.height, height);
+                    acc[output.address]['MST'][output.attachment.symbol].available += available;
+                    acc[output.address]['MST'][output.attachment.symbol].available += output.attachment.quantity - available;
                 }
                 if (output.value) {
                     if (output.locked_height_range && output.locked_height_range + tx.height > height)
@@ -126,6 +138,74 @@ function calculateAddressesBalances(transactions, addresses, height, init) {
                 }
             }
         });
+        return acc;
+    }, init);
+}
+
+function calculateBalancesFromUtxo(utxo, addresses, height, init) {
+    if (init == undefined) init = {
+        ETP: {
+            available: 0,
+            frozen: 0,
+            decimals: 8
+        },
+        MST: {}
+    };
+    return utxo.reduce((acc, output) => {
+        if (addresses.indexOf(output.address) !== -1) {
+            if (output.attachment && (output.attachment.type == 'asset-transfer' || output.attachment.type == 'asset-issue')) {
+                if (acc['MST'][output.attachment.symbol] == undefined)
+                    acc['MST'][output.attachment.symbol] = {
+                        available: 0,
+                        frozen: 0,
+                        decimals: output.attachment.decimals
+                    };
+                let available = Metaverse.output.assetSpendable(output, output.height, height);
+                acc['MST'][output.attachment.symbol].available += available;
+                acc['MST'][output.attachment.symbol].frozen += output.attachment.quantity - available;
+            }
+            if (output.value) {
+                if (output.locked_height_range && output.locked_height_range + output.height > height)
+                    acc['ETP'].frozen += output.value;
+                else
+                    acc['ETP'].available += output.value;
+            }
+        }
+        return acc;
+    }, init);
+}
+
+function calculateAddressesBalancesFromUtxo(utxo, addresses, height, init) {
+    if (init == undefined) init = {};
+    return utxo.reduce((acc, output) => {
+        if (acc[output.address] == undefined)
+            acc[output.address] = {
+                MST: {},
+                ETP: {
+                    available: 0,
+                    frozen: 0,
+                    decimals: 8
+                }
+            };
+        if (addresses.indexOf(output.address) !== -1) {
+            if (output.attachment && (output.attachment.type == 'asset-transfer' || output.attachment.type == 'asset-issue')) {
+                if (acc[output.address]['MST'][output.attachment.symbol] == undefined)
+                    acc[output.address]['MST'][output.attachment.symbol] = {
+                        available: 0,
+                        frozen: 0,
+                        decimals: output.attachment.decimals
+                    };
+                let available = Metaverse.output.assetSpendable(output, output.height, height);
+                acc[output.address]['MST'][output.attachment.symbol].available += available;
+                acc[output.address]['MST'][output.attachment.symbol].frozen += output.attachment.quantity - available;
+            }
+            if (output.value) {
+                if (output.locked_height_range && output.locked_height_range + output.height > height)
+                    acc[output.address]['ETP'].frozen += output.value;
+                else
+                    acc[output.address]['ETP'].available += output.value;
+            }
+        }
         return acc;
     }, init);
 }

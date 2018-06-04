@@ -1,6 +1,6 @@
 {
   "name": "mvs-blockchain",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "Metaverse Blockchain adapter",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/canguruhh/mvs-blockchain-js#readme",
   "dependencies": {
-    "metaversejs": "^0.2.47",
+    "metaversejs": "^0.3.13",
     "superagent": "^3.8.3"
   },
   "devDependencies": {
