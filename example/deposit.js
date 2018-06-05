@@ -12,8 +12,8 @@ var change_address = "MDc9rsRr5Ukgro4mu89G2Spdts5aACRJdb";
 Metaverse.wallet.fromMnemonic("lunar there win define minor shadow damage lounge bitter abstract sail alcohol yellow left lift vapor tourist rent gloom sustain gym dry congress zero")
     .then((wallet) =>
         blockchain.addresses.txs(wallet.getAddresses())
-        .then(txs => Metaverse.transaction_builder.calculateUtxo(txs.transactions, wallet.getAddresses())) //Get all utxo
-        .then((utxos) => Metaverse.transaction_builder.findUtxo(utxos, {
+        .then(txs => Metaverse.output.calculateUtxo(txs.transactions, wallet.getAddresses())) //Get all utxo
+        .then((utxos) => Metaverse.output.findUtxo(utxos, {
             'ETP': quantity
         }, Metaverse.transaction.DEFAULT_FEE)) //Collect utxo for given target
         .then((result) => Metaverse.transaction_builder.deposit(result.utxo, recipient_address, quantity, duration, change_address, result.change))
