@@ -128,7 +128,8 @@ function calculateAddressesBalances(transactions, addresses, height, init) {
                         };
                     let available = Metaverse.output.assetSpendable(output, tx.height, height);
                     acc[output.address]['MST'][output.attachment.symbol].available += available;
-                    acc[output.address]['MST'][output.attachment.symbol].frozen += output.attachment.quantity - available;
+                    if (output.attachment.quantity - available)
+                        acc[output.address]['MST'][output.attachment.symbol].frozen += output.attachment.quantity - available;
                 }
                 if (output.value) {
                     if (output.locked_height_range && output.locked_height_range + tx.height > height)
