@@ -1,7 +1,7 @@
 let blockchain = require('..')({
     url: "https://explorer-testnet.mvs.org/api/"
 });
-let Metaverse = require('../../metaversejs');
+let Metaverse = require('metaversejs');
 
 var recipient_address = "tFhuyTYeNAttzvEN8FUM5h52GGAujkrKbs";
 var recipient_avatar = "laurent";
