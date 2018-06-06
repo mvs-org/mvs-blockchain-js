@@ -20,10 +20,14 @@ function extractAvatars(outputs) {
     return new Promise(resolve => {
         let avatars = [];
         outputs.forEach((output) => {
-            if (output.attachment.type == 'did-issue') avatars.push({
-                symbol: output.attachment.symbol,
-                address: output.attachment.address
-            });
+            switch (output.attachment.type) {
+                case 'did-register':
+                case 'did-transfer':
+                    avatars.push({
+                        symbol: output.attachment.symbol,
+                        address: output.attachment.address
+                    });
+            }
         });
         resolve(avatars);
     });
