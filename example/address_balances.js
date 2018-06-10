@@ -3,9 +3,15 @@ let blockchain = require('..')({
 });
 let Metaverse = require('metaversejs');
 
-blockchain.height()
-    .then((height) => blockchain.addresses.txs(['t85Hm2nYwQXrry2cVmEHPq8krRdJ7KYjmq']) //Get transactions
-        .then((txs) => blockchain.balance.addresses(txs.transactions, ['t85Hm2nYwQXrry2cVmEHPq8krRdJ7KYjmq'], height)) //
-          .then(balances => console.log(JSON.stringify(balances)))
-    )
+
+Metaverse.wallet.fromMnemonic("butter vacuum breeze glow virtual mutual veteran argue want pipe elite blast judge write sand toilet file joy exotic reflect truck topic receive wait", 'testnet')
+    .then((wallet) =>
+          blockchain.height()
+          .then(height =>
+                blockchain.addresses.txs(wallet.getAddresses())
+                .then(txs => Metaverse.output.calculateUtxo(txs.transactions, wallet.getAddresses()))
+                .then((utxo) => blockchain.balance.addresses(utxo, wallet.getAddresses(), height))
+                .then(balances => console.log(JSON.stringify(balances)))
+               )
+         )
     .catch(console.error);

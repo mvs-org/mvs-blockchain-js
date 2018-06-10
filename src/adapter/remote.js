@@ -33,10 +33,8 @@ module.exports = (url) => {
             list: listAssets
         },
         balance:{
-            all: helper.balances.all.from_tx,
-            allFromUtxo: helper.balances.all.from_utxo,
-            addresses: helper.balances.addresses.from_tx,
-            addressesFromUtxo: helper.balances.addresses.from_utxo
+            all: helper.balances.all,
+            addresses:  helper.balances.addresses
         }
     };
 };

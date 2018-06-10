@@ -15,7 +15,7 @@ Metaverse.wallet.fromMnemonic("butter vacuum breeze glow virtual mutual veteran 
         .then(height => blockchain.addresses.txs(["tGBMcLr6dwfaMaoYiJgtZ3cYUbbGsbpb8t"])
             .then(txs => Metaverse.output.calculateUtxo(txs.transactions, ["tGBMcLr6dwfaMaoYiJgtZ3cYUbbGsbpb8t"])) //Get all utxo
             .then((utxos) => Metaverse.output.findUtxo(utxos, target, height)) //Collect utxo for given target
-             .then((result) => Metaverse.transaction_builder.registerMIT(result.utxo, recipient_address, "nova", "MIT_SUPERNOVA", "SOME CONTENT", change_address, result.change))
+             .then((result) => Metaverse.transaction_builder.registerMIT(result.utxo, recipient_address, "nova", "MIT_SUPERNOVAE", "SOME OTHER CONTENT", change_address, result.change))
             .then((tx) => wallet.sign(tx))
             .then((tx) => tx.encode())
             .then((tx) => blockchain.transaction.broadcast(tx.toString('hex')))
