@@ -26,7 +26,9 @@ module.exports = (url) => {
             txs: listAllAddressesTxs
         },
         avatar: {
-            extract: helper.avatar.extract
+            extract: helper.avatar.extract,
+            get: getAvatar,
+            list: listAvatars
         },
         asset: {
             get: getAsset,
@@ -70,6 +72,15 @@ function getAsset(symbol) {
 
 function listAssets() {
     return get(`${REMOTE}assets`);
+}
+
+function getAvatar(symbol) {
+    return get(`${REMOTE}avatar/${symbol}`)
+        .then((result) => result);
+}
+
+function listAvatars() {
+    return get(`${REMOTE}avatars`);
 }
 
 function listAddressTxs(address, options) {
