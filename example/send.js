@@ -15,7 +15,7 @@ Metaverse.wallet.fromMnemonic("lunar there win define minor shadow damage lounge
 	    .then(height=>blockchain.addresses.txs(wallet.getAddresses())
         .then(txs => Metaverse.output.calculateUtxo(txs.transactions, wallet.getAddresses())) //Get all utxo
         .then((utxos) => Metaverse.output.findUtxo(utxos, target, height)) //Collect utxo for given target
-        .then((result) => Metaverse.transaction_builder.send(result.utxo, recipient_address, target, result.utxo[0].address, result.change))
+            .then((result) => Metaverse.transaction_builder.send(result.utxo, recipient_address, undefined, target, result.utxo[0].address, result.change))
         .then((tx) => wallet.sign(tx))
         .then((tx) => tx.encode())
         .then((tx) => blockchain.transaction.broadcast(tx.toString('hex')))
