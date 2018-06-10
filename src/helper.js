@@ -15,6 +15,7 @@ function extractAvatars(outputs) {
         let avatars = [];
         outputs.forEach((output) => {
             switch (output.attachment.type) {
+                case Metaverse.constants.ATTACHMENT.TYPE.AVATAR:
                 case 'did-register':
                 case 'did-transfer':
                     avatars.push({
