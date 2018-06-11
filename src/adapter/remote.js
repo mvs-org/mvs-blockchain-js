@@ -30,9 +30,13 @@ module.exports = (url) => {
             get: getAvatar,
             list: listAvatars
         },
-        asset: {
+        MST: {
             get: getAsset,
             list: listAssets
+        },
+        MIT: {
+            get: getMIT,
+            list: listMIT
         },
         balance:{
             all: helper.balances.all,
@@ -72,6 +76,15 @@ function getAsset(symbol) {
 
 function listAssets() {
     return get(`${REMOTE}assets`);
+}
+
+function getMIT(symbol) {
+    return get(`${REMOTE}mits/${symbol}`)
+        .then((result) => result[0]);
+}
+
+function listMIT() {
+    return get(`${REMOTE}mits`);
 }
 
 function getAvatar(symbol) {
