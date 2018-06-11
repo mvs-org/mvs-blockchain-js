@@ -80,7 +80,7 @@ function listAssets() {
 
 function getMIT(symbol) {
     return get(`${REMOTE}mits/${symbol}`)
-        .then((result) => result[0]);
+        .then((result) => result);
 }
 
 function listMIT() {
