@@ -79,7 +79,7 @@ function listAssets() {
 }
 
 function getMIT(symbol) {
-    return get(`${REMOTE}mits/${symbol}`)
+    return get(`${REMOTE}mits/${symbol}?showInvalidated=1`)
         .then((result) => result);
 }
 
@@ -87,7 +87,7 @@ function listMIT() {
     return get(`${REMOTE}mits`);
 }
 
-function getAvatar(symbol) {
+function getAvatar(symbol, showInvalidated = 0) {
     return get(`${REMOTE}avatar/${symbol}`)
         .then((result) => result);
 }
