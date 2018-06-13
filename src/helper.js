@@ -64,7 +64,7 @@ function calculateBalancesFromUtxo(utxo, addresses, height, init) {
                     break;
             }
             if (output.value) {
-                if (output.locked_height_range && output.locked_height_range + output.height > height)
+                if (output.locked_until > height)
                     acc['ETP'].frozen += output.value;
                 else
                     acc['ETP'].available += output.value;
@@ -112,7 +112,7 @@ function calculateAddressesBalancesFromUtxo(utxo, addresses, height, init) {
                     break;
             }
             if (output.value) {
-                if (output.locked_height_range && output.locked_height_range + output.height > height)
+                if (output.locked_until > height)
                     acc[output.address]['ETP'].frozen += output.value;
                 else
                     acc[output.address]['ETP'].available += output.value;
