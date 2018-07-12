@@ -1,7 +1,7 @@
 let blockchain = require('..')({
     url: "https://explorer-testnet.mvs.org/api/"
 });
-let Metaverse = require('../../metaversejs');
+let Metaverse = require('metaversejs');
 
 var target = {
     ETP: 1000
