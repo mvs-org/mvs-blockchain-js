@@ -1,0 +1,14 @@
+var assert = require('assert');
+var chai = require("chai"),
+    chaiAsPromised = require("chai-as-promised"),
+    should = chai.should(),
+    Blockchain = require('../')();
+chai.use(chaiAsPromised);
+
+describe('Pricing', function() {
+
+    it('Get transaction', () => {
+        return Blockchain.pricing.tickers()
+            .should.eventually.have.property("ETP");
+    });
+});

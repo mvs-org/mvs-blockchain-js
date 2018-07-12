@@ -25,6 +25,9 @@ module.exports = (url) => {
         addresses: {
             txs: listAllAddressesTxs
         },
+        pricing: {
+            tickers: listTickers
+        },
         avatar: {
             extract: helper.avatar.extract,
             get: getAvatar,
@@ -51,6 +54,10 @@ function getHeight() {
 
 function getTx(hash) {
     return get(`${REMOTE}tx/${hash}`);
+}
+
+function listTickers() {
+    return get(`${REMOTE}pricing/tickers`);
 }
 
 function listTxs(page = 0, items_per_page = 10) {
