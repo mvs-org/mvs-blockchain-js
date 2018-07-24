@@ -41,6 +41,7 @@ function calculateBalancesFromUtxo(utxo, addresses, height, init) {
     return utxo.reduce((acc, output) => {
         if (addresses.indexOf(output.address) !== -1) {
             switch (output.attachment.type) {
+                case Metaverse.constants.ATTACHMENT.TYPE.MST:
                 case 'asset-transfer':
                 case 'asset-issue':
                     if (acc.MST[output.attachment.symbol] == undefined)
@@ -53,6 +54,7 @@ function calculateBalancesFromUtxo(utxo, addresses, height, init) {
                     acc.MST[output.attachment.symbol].available += available;
                     acc.MST[output.attachment.symbol].frozen += output.attachment.quantity - available;
                     break;
+                case Metaverse.constants.ATTACHMENT.TYPE.MIT:
                 case 'mit':
                     acc.MIT.push({
                         symbol: output.attachment.symbol,
