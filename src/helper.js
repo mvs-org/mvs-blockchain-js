@@ -91,6 +91,7 @@ function calculateAddressesBalancesFromUtxo(utxo, addresses, height, init) {
             };
         if (addresses.indexOf(output.address) !== -1) {
             switch (output.attachment.type) {
+                case Metaverse.constants.ATTACHMENT.TYPE.MST:
                 case 'asset-transfer':
                 case 'asset-issue':
                     if (acc[output.address]['MST'][output.attachment.symbol] == undefined)
@@ -103,6 +104,7 @@ function calculateAddressesBalancesFromUtxo(utxo, addresses, height, init) {
                     acc[output.address]['MST'][output.attachment.symbol].available += available;
                     acc[output.address]['MST'][output.attachment.symbol].frozen += output.attachment.quantity - available;
                     break;
+                case Metaverse.constants.ATTACHMENT.TYPE.MIT:
                 case 'mit':
                     acc[output.address].MIT.push({
                         symbol: output.attachment.symbol,
