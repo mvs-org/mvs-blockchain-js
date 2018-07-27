@@ -17,7 +17,8 @@ module.exports = (url) => {
         },
         block: {
             get: getBlock,
-            list: listBlocks
+            list: listBlocks,
+            blocktime: getBlocktime
         },
         address: {
             txs: listAddressTxs
@@ -50,6 +51,15 @@ module.exports = (url) => {
 
 function getHeight() {
     return get(`${REMOTE}height`);
+}
+
+function getBlocktime(interval){
+    return getBlockStats(interval, 2)
+        .then(stats=>stats[0][1]);
+}
+
+function getBlockStats(interval, limit){
+    return get(`${REMOTE}stats/block?interval=${interval}&limit=${limit}`);
 }
 
 function getTx(hash) {

@@ -7,7 +7,7 @@ chai.use(chaiAsPromised);
 
 describe('Pricing', function() {
 
-    it('Get transaction', () => {
+    it('Get pricing', () => {
         return Blockchain.pricing.tickers()
             .should.eventually.have.property("ETP");
     });
