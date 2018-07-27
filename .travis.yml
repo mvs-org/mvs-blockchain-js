@@ -6,8 +6,10 @@ cache:
   - node_modules
 before_script:
 - npm install grunt-cli -g
+script:
+- grunt test
 before_deploy:
-- grunt
+- grunt build
 deploy:
   provider: npm
   email: canguruhh@mutzl.org
