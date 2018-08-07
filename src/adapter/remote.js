@@ -45,6 +45,15 @@ module.exports = (url) => {
         balance:{
             all: helper.balances.all,
             addresses:  helper.balances.addresses
+        },
+        suggest:{
+            avatar: suggestAvatar,
+            address: suggestAddress,
+            tx: suggestTx,
+            block: suggestBlock,
+            mst: suggestMst,
+            mit: suggestMit,
+            all: suggestAll
         }
     };
 };
@@ -115,6 +124,34 @@ function listAvatars() {
 
 function listAddressTxs(address, options) {
     return listAllAddressesTxs([address],options);
+}
+
+function suggestAvatar(prefix) {
+    return get(`${REMOTE}suggest/avatar/${prefix}`);
+}
+
+function suggestAddress(prefix) {
+    return get(`${REMOTE}suggest/address/${prefix}`);
+}
+
+function suggestTx(prefix) {
+    return get(`${REMOTE}suggest/tx/${prefix}`);
+}
+
+function suggestBlock(prefix) {
+    return get(`${REMOTE}suggest/blocks/${prefix}`);
+}
+
+function suggestMst(prefix) {
+    return get(`${REMOTE}suggest/asset/${prefix}`);
+}
+
+function suggestMit(prefix) {
+    return get(`${REMOTE}suggest/mit/${prefix}`);
+}
+
+function suggestAll(prefix) {
+    return get(`${REMOTE}suggest/all/${prefix}`);
 }
 
 function listAllAddressesTxs(addresses, options = {}) {
