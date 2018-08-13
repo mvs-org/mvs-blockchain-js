@@ -87,7 +87,8 @@ function calculateAddressesBalancesFromUtxo(utxo, addresses, height, init) {
                     decimals: 8
                 },
                 MST: {},
-                MIT: []
+                MIT: [],
+                AVATAR: ""
             };
         if (addresses.indexOf(output.address) !== -1) {
             switch (output.attachment.type) {
@@ -113,6 +114,10 @@ function calculateAddressesBalancesFromUtxo(utxo, addresses, height, init) {
                         owner: output.attachment.to_did,
                         status: output.attachment.status
                     });
+                    break;
+                case Metaverse.constants.ATTACHMENT.TYPE.AVATAR:
+                case 'did-register':
+                    acc[output.address].AVATAR = output.attachment.symbol;
                     break;
             }
             if (output.value) {
