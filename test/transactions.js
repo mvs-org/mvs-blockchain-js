@@ -2,14 +2,17 @@ var assert = require('assert');
 var chai = require("chai"),
     chaiAsPromised = require("chai-as-promised"),
     should = chai.should(),
-    Blockchain = require('../')();
+    Blockchain = new require('../')({
+        network: 'testnet'
+    });
+
 chai.use(chaiAsPromised);
 
 describe('Transactions', function() {
 
     it('Get transaction', () => {
-        return Blockchain.transaction.get("2a845dfa63a7c20d40dbc4b15c3e970ef36332b367500fd89307053cb4c1a2c1")
+        return Blockchain.transaction.get("d4d612297cbecbc2d6438403e751ca83b3eedc58966033016e52889a9a86062e")
             .then((tx) => tx.block)
-            .should.become("b81848ef9ae86e84c3da26564bc6ab3a79efc628239d11471ab5cd25c0684c2d");
+            .should.become("c359a1cc3dfb8b97111c3e602f1f6de31306926f9ec779cb9ea002edbee91741");
     });
 });

@@ -2,7 +2,9 @@ var assert = require('assert');
 var chai = require("chai"),
     chaiAsPromised = require("chai-as-promised"),
     should = chai.should(),
-    Blockchain = require('../')();
+    Blockchain = require('../')({
+        network: 'testnet'
+    });
 chai.use(chaiAsPromised);
 
 describe('Pricing', function() {
