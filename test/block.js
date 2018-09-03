@@ -21,7 +21,7 @@ describe('Block', function() {
             .should.eventually.be.equal("0000000000000000000000000000000000000000000000000000000000000000");
     });
 
-    describe('List blocks', function() {
+    /*describe('List blocks', function() {
         it('List blocks', () => {
             return Blockchain.block.list(1, 10)
                 .should.eventually.be.fulfilled;
@@ -30,7 +30,7 @@ describe('Block', function() {
             return Blockchain.block.list(1, 101)
                 .should.eventually.be.rejected;
         });
-    });
+    });*/
 
     it('Get blocktime', () => {
         return Blockchain.block.blocktime()
