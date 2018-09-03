@@ -54,6 +54,9 @@ module.exports = (url) => {
             mst: suggestMst,
             mit: suggestMit,
             all: suggestAll
+        },
+        bridge:{
+            whitelist: listBridgeMst
         }
     };
 };
@@ -152,6 +155,10 @@ function suggestMit(prefix) {
 
 function suggestAll(prefix) {
     return get(`${REMOTE}suggest/all/${prefix}`);
+}
+
+function listBridgeMst() {
+    return get(`${REMOTE}bridge/whitelist`);
 }
 
 function listAllAddressesTxs(addresses, options = {}) {
