@@ -54,6 +54,10 @@ module.exports = (url) => {
             mst: suggestMst,
             mit: suggestMit,
             all: suggestAll
+        },
+        multisig: {
+            add: addMultisigWallet,
+            get: getMultisigWallet
         }
     };
 };
@@ -81,6 +85,14 @@ function listTickers() {
 
 function listTxs(page = 0, items_per_page = 10) {
     return get(`${REMOTE}txs?page=${page}`);
+}
+
+function addMultisigWallet(wallet){
+    return post(`https://metastore.mvs.org/multisig`,wallet);
+}
+
+function getMultisigWallet(address){
+    return get(`https://metastore.mvs.org/multisig/${address}`);
 }
 
 function broadcastTx(tx){
