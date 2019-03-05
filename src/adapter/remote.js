@@ -69,13 +69,13 @@ function getHeight() {
     return get(`${REMOTE}height`);
 }
 
-function getBlocktime(interval) {
-    return getBlockStats(interval, 2)
+function getBlocktime(downscale) {
+    return getBlockStats(undefined, downscale)
         .then(stats => stats[0][1]);
 }
 
-function getBlockStats(interval, limit) {
-    return get(`${REMOTE}stats/block?interval=${interval}&limit=${limit}`);
+function getBlockStats(type, downscale) {
+    return get(`${REMOTE}stats/block?type=${type}&downscale=${downscale}`);
 }
 
 function getTx(hash) {
