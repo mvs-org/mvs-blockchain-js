@@ -1,5 +1,5 @@
 const Request = require("superagent"),
-    helper = require("../helper.js");
+ helper = require("../helper.js");
 
 let REMOTE = null;
 
@@ -24,7 +24,8 @@ module.exports = (url) => {
             txs: listAddressTxs
         },
         addresses: {
-            txs: listAllAddressesTxs
+            txs: listAllAddressesTxs,
+            listTxs: listAddressesTxs
         },
         pricing: {
             tickers: listTickers
@@ -42,25 +43,9 @@ module.exports = (url) => {
             get: getMIT,
             list: listMIT
         },
-        balance: {
+        balance:{
             all: helper.balances.all,
-            addresses: helper.balances.addresses
-        },
-        suggest: {
-            avatar: suggestAvatar,
-            address: suggestAddress,
-            tx: suggestTx,
-            block: suggestBlock,
-            mst: suggestMst,
-            mit: suggestMit,
-            all: suggestAll
-        },
-        multisig: {
-            add: addMultisigWallet,
-            get: getMultisigWallet
-        },
-        bridge: {
-            whitelist: listBridgeMst
+            addresses:  helper.balances.addresses
         }
     };
 };
@@ -69,13 +54,13 @@ function getHeight() {
     return get(`${REMOTE}height`);
 }
 
-function getBlocktime(downscale) {
-    return getBlockStats(undefined, downscale)
-        .then(stats => stats[0][1]);
+function getBlocktime(interval){
+    return getBlockStats(interval, 2)
+        .then(stats=>stats[0][1]);
 }
 
-function getBlockStats(type, downscale) {
-    return get(`${REMOTE}stats/block?type=${type}&downscale=${downscale}`);
+function getBlockStats(interval, limit){
+    return get(`${REMOTE}stats/block?interval=${interval}&limit=${limit}`);
 }
 
 function getTx(hash) {
@@ -90,18 +75,8 @@ function listTxs(page = 0, items_per_page = 10) {
     return get(`${REMOTE}txs?page=${page}`);
 }
 
-function addMultisigWallet(wallet) {
-    return post(`https://metastore.mvs.org/multisig`, wallet);
-}
-
-function getMultisigWallet(address) {
-    return get(`https://metastore.mvs.org/multisig/${address}`);
-}
-
-function broadcastTx(tx) {
-    return post(`${REMOTE}tx`, {
-        tx: tx
-    });
+function broadcastTx(tx){
+    return post(`${REMOTE}tx`,{tx:tx});
 }
 
 function getBlock(hash) {
@@ -140,51 +115,26 @@ function listAvatars() {
 }
 
 function listAddressTxs(address, options) {
-    return listAllAddressesTxs([address], options);
-}
-
-function suggestAvatar(prefix) {
-    return get(`${REMOTE}suggest/avatar/${prefix}`);
-}
-
-function suggestAddress(prefix) {
-    return get(`${REMOTE}suggest/address/${prefix}`);
-}
-
-function suggestTx(prefix) {
-    return get(`${REMOTE}suggest/tx/${prefix}`);
-}
-
-function suggestBlock(prefix) {
-    return get(`${REMOTE}suggest/blocks/${prefix}`);
-}
-
-function suggestMst(prefix) {
-    return get(`${REMOTE}suggest/asset/${prefix}`);
-}
-
-function suggestMit(prefix) {
-    return get(`${REMOTE}suggest/mit/${prefix}`);
-}
-
-function suggestAll(prefix) {
-    return get(`${REMOTE}suggest/all/${prefix}`);
-}
-
-function listBridgeMst() {
-    return get(`${REMOTE}bridge/whitelist`);
+    return listAllAddressesTxs([address],options);
 }
 
 function listAllAddressesTxs(addresses, options = {}) {
-    let url = `${REMOTE}addresses/txs?addresses=` + addresses.join('&addresses=');
-    if (options.max_height)
-        url += '&max_height=' + options.max_height;
-    if (options.min_height)
-        url += '&min_height=' + options.min_height;
-    if (options.max_time)
-        url += '&max_time=' + options.max_time;
-    if (options.min_time)
-        url += '&min_time=' + options.min_time;
+    let url = `${REMOTE}addresses/txs?addresses=`+addresses.join('&addresses=');
+    if(options.max_height)
+        url+='&max_height='+options.max_height;
+    if(options.min_height)
+        url+='&min_height='+options.min_height;
+    if(options.max_time)
+        url+='&max_time='+options.max_time;
+    if(options.min_time)
+        url+='&min_time='+options.min_time;
+    return get(url);
+}
+
+function listAddressesTxs(addresses, options = {}) {
+    let url = `${REMOTE}v2/addresses/txs?addresses=`+addresses.join('&addresses=');
+    if(options.min_height)
+        url+='&min_height='+options.min_height;
     return get(url);
 }
 
