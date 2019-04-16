@@ -45,7 +45,23 @@ module.exports = (url) => {
         },
         balance:{
             all: helper.balances.all,
-            addresses:  helper.balances.addresses
+            addresses: helper.balances.addresses
+        },
+        suggest: {
+            avatar: suggestAvatar,
+            address: suggestAddress,
+            tx: suggestTx,
+            block: suggestBlock,
+            mst: suggestMst,
+            mit: suggestMit,
+            all: suggestAll
+        },
+        multisig: {
+            add: addMultisigWallet,
+            get: getMultisigWallet
+        },
+        bridge: {
+            whitelist: listBridgeMst
         }
     };
 };
@@ -54,13 +70,13 @@ function getHeight() {
     return get(`${REMOTE}height`);
 }
 
-function getBlocktime(interval){
-    return getBlockStats(interval, 2)
-        .then(stats=>stats[0][1]);
+function getBlocktime(downscale) {
+    return getBlockStats(undefined, downscale)
+        .then(stats => stats[0][1]);
 }
 
-function getBlockStats(interval, limit){
-    return get(`${REMOTE}stats/block?interval=${interval}&limit=${limit}`);
+function getBlockStats(type, downscale) {
+    return get(`${REMOTE}stats/block?type=${type}&downscale=${downscale}`);
 }
 
 function getTx(hash) {
@@ -75,8 +91,18 @@ function listTxs(page = 0, items_per_page = 10) {
     return get(`${REMOTE}txs?page=${page}`);
 }
 
-function broadcastTx(tx){
-    return post(`${REMOTE}tx`,{tx:tx});
+function addMultisigWallet(wallet) {
+    return post(`https://metastore.mvs.org/multisig`, wallet);
+}
+
+function getMultisigWallet(address) {
+    return get(`https://metastore.mvs.org/multisig/${address}`);
+}
+
+function broadcastTx(tx) {
+    return post(`${REMOTE}tx`, {
+        tx: tx
+    });
 }
 
 function getBlock(hash) {
@@ -116,6 +142,38 @@ function listAvatars() {
 
 function listAddressTxs(address, options) {
     return listAllAddressesTxs([address],options);
+}
+
+function suggestAvatar(prefix) {
+    return get(`${REMOTE}suggest/avatar/${prefix}`);
+}
+
+function suggestAddress(prefix) {
+    return get(`${REMOTE}suggest/address/${prefix}`);
+}
+
+function suggestTx(prefix) {
+    return get(`${REMOTE}suggest/tx/${prefix}`);
+}
+
+function suggestBlock(prefix) {
+    return get(`${REMOTE}suggest/blocks/${prefix}`);
+}
+
+function suggestMst(prefix) {
+    return get(`${REMOTE}suggest/asset/${prefix}`);
+}
+
+function suggestMit(prefix) {
+    return get(`${REMOTE}suggest/mit/${prefix}`);
+}
+
+function suggestAll(prefix) {
+    return get(`${REMOTE}suggest/all/${prefix}`);
+}
+
+function listBridgeMst() {
+    return get(`${REMOTE}bridge/whitelist`);
 }
 
 function listAllAddressesTxs(addresses, options = {}) {
