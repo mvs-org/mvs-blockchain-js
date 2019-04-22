@@ -62,6 +62,10 @@ module.exports = (url) => {
         },
         bridge: {
             whitelist: listBridgeMst
+        },
+        news: {
+            news: listNews,
+            announcements: listAnnoucements
         }
     };
 };
@@ -174,6 +178,14 @@ function suggestAll(prefix) {
 
 function listBridgeMst() {
     return get(`${REMOTE}bridge/whitelist`);
+}
+
+function listNews(lang = "en-us", limit = 100) {
+    return get(`${REMOTE}content/news?lang=${lang}&limit=${limit}`);
+}
+
+function listAnnoucements(lang = "en-us", limit = 100) {
+    return get(`${REMOTE}content/announcements?lang=${lang}&limit=${limit}`);
 }
 
 function listAllAddressesTxs(addresses, options = {}) {
