@@ -62,6 +62,9 @@ module.exports = (url) => {
         },
         bridge: {
             whitelist: listBridgeMst
+        },
+        utxo: {
+            get: getUtxo,
         }
     };
 };
@@ -193,6 +196,11 @@ function listAddressesTxs(addresses, options = {}) {
     let url = `${REMOTE}v2/addresses/txs?addresses=`+addresses.join('&addresses=');
     if(options.min_height)
         url+='&min_height='+options.min_height;
+    return get(url);
+}
+
+function getUtxo(addresses) {
+    let url = `${REMOTE}v2/utxo?addresses=`+addresses.join('&addresses=');
     return get(url);
 }
 
