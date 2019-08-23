@@ -208,7 +208,7 @@ function getUtxo(addresses) {
 }
 
 function getCert(symbol, type) {
-    return get(`${REMOTE}cert?symbol=${symbol}&type=${type}`);
+    return get(`${REMOTE}v2/cert?symbol=${symbol}&type=${type}`);
 }
 
 function get(url, parameters) {
