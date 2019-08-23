@@ -65,6 +65,9 @@ module.exports = (url) => {
         },
         utxo: {
             get: getUtxo,
+        },
+        cert: {
+            get: getCert
         }
     };
 };
@@ -202,6 +205,10 @@ function listAddressesTxs(addresses, options = {}) {
 function getUtxo(addresses) {
     let url = `${REMOTE}v2/utxo?addresses=`+addresses.join('&addresses=');
     return get(url);
+}
+
+function getCert(symbol, type) {
+    return get(`${REMOTE}cert?symbol=${symbol}&type=${type}`);
 }
 
 function get(url, parameters) {
