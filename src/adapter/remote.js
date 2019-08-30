@@ -13,39 +13,39 @@ module.exports = (url) => {
         transaction: {
             get: getTx,
             list: listTxs,
-            broadcast: broadcastTx
+            broadcast: broadcastTx,
         },
         block: {
             get: getBlock,
             list: listBlocks,
-            blocktime: getBlocktime
+            blocktime: getBlocktime,
         },
         address: {
-            txs: listAddressTxs
+            txs: listAddressTxs,
         },
         addresses: {
             txs: listAllAddressesTxs,
-            listTxs: listAddressesTxs
+            listTxs: listAddressesTxs,
         },
         pricing: {
-            tickers: listTickers
+            tickers: listTickers,
         },
         avatar: {
             extract: helper.avatar.extract,
             get: getAvatar,
-            list: listAvatars
+            list: listAvatars,
         },
         MST: {
             get: getAsset,
-            list: listAssets
+            list: listAssets,
         },
         MIT: {
             get: getMIT,
-            list: listMIT
+            list: listMIT,
         },
         balance: {
             all: helper.balances.all,
-            addresses: helper.balances.addresses
+            addresses: helper.balances.addresses,
         },
         suggest: {
             avatar: suggestAvatar,
@@ -54,20 +54,23 @@ module.exports = (url) => {
             block: suggestBlock,
             mst: suggestMst,
             mit: suggestMit,
-            all: suggestAll
+            all: suggestAll,
         },
         multisig: {
             add: addMultisigWallet,
-            get: getMultisigWallet
+            get: getMultisigWallet,
         },
         bridge: {
-            whitelist: listBridgeMst
+            whitelist: listBridgeMst,
         },
         utxo: {
             get: getUtxo,
         },
         cert: {
-            get: getCert
+            get: getCert,
+        },
+        output: {
+            get: getOutput,
         }
     };
 };
@@ -217,6 +220,10 @@ function getUtxo(addresses, options = {}) {
 
 function getCert(symbol, type) {
     return get(`${REMOTE}v2/cert?symbol=${symbol}&type=${type}`);
+}
+
+function getOutput(hash, index) {
+    return get(`${REMOTE}v2/output/${hash}/${index}`);
 }
 
 function get(url, parameters) {
