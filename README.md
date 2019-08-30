@@ -3,8 +3,8 @@
     <img src="https://raw.githubusercontent.com/mvs-org/lightwallet/master/src/assets/logo.png" alt="">
   </a>
   <br>
-  <a href="https://travis-ci.org/canguruhh/mvs-blockchain-js">
-     <img src="https://travis-ci.org/canguruhh/mvs-blockchain-js.png?branch=master" alt="Build status">
+  <a href="https://travis-ci.org/mvs-org/mvs-blockchain-js">
+     <img src="https://travis-ci.org/mvs-org/mvs-blockchain-js.png?branch=master" alt="Build status">
   </a>
   <br>
   A javascript library for the Metaverse blockchain

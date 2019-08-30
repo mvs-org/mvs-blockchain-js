@@ -16,7 +16,7 @@ deploy:
   skip_cleanup: true
   on:
     branch: master
-    repo: canguruhh/mvs-blockchain-js
+    repo: mvs-org/mvs-blockchain-js
     tag: latest
   api_key:
     secure: cutmvVQSZ9s8k+6k3+bZRsPHTX/JByTq7ssNhIOym+AVxYcmg3TqqqPhZWKh9HTZlda6z2iQujlt9Lzr/1SoB7L6N1oNfYwFixCrbzY+bKj8uXqRpjG/4wnMF7vcA0NFGiEmEy8GeDHbRFWDzQOiIXHQygSeoXYE2NS6ThyVMYrIjQg/C5UA2mlvZPsurFPZ0JxRx/QEYJS74A6S7ffIVGu0HjBT6MEFiNEEJeCn3Cn5+NC8llP1zcxvyLJ48dQfHJlPaQDt2NGuZla3Ovas1JkLmaZ1HJrStAflh4iWs3MYxXB8CAhtbQ7u7/x8mq/OtYBxQ7U391WDU03IThb4rt/FQRhsHvwyLAaMDgcI8u4J5yuKXWv8X2I/o1DhdKoQdrrq7xf1Z+pTalBT1wYARdW0yJO3BpohTBoZHLSw+FPE/UC3hTfYmYgPtT32ipNsuprND4fH41OlSsICPNhDootoHVY3Je74FqSaaDDUOI5jPa5yGyBlQcE3tbJZuadzvixuc+hpPIslRCOC1G3HepaiFWKCbGSWinGrTzajrr5pebknFtu6tLhiiLYRwXwaeJ514AXekZEJB/o3TJn48BdNvNi04coFwlne82zNykizVmfcpcU2At08qeEbM/K1cSdEBSZJN0px+Z/BRS290a1ucWniQIaHJ3O8L72bnPo=
