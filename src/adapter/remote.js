@@ -33,6 +33,7 @@ module.exports = (url) => {
         avatar: {
             extract: helper.avatar.extract,
             get: getAvatar,
+            available: getAvatarAvailable,
             list: listAvatars,
         },
         MST: {
@@ -142,6 +143,11 @@ function listMIT() {
 
 function getAvatar(symbol, showInvalidated = 0) {
     return get(`${REMOTE}avatar/${symbol}`)
+        .then((result) => result);
+}
+
+function getAvatarAvailable(symbol) {
+    return get(`${REMOTE}v2/avatar/available/${symbol}`)
         .then((result) => result);
 }
 
