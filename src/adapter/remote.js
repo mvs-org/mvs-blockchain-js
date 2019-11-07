@@ -39,6 +39,7 @@ module.exports = (url) => {
         MST: {
             get: getAsset,
             list: listAssets,
+            icons: listIcons,
         },
         MIT: {
             get: getMIT,
@@ -130,6 +131,10 @@ function getAsset(symbol) {
 
 function listAssets() {
     return get(`${REMOTE}assets`);
+}
+
+function listIcons() {
+    return get(`${REMOTE}assets/icons`);
 }
 
 function getMIT(symbol) {
