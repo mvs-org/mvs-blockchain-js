@@ -73,6 +73,9 @@ module.exports = (url) => {
         },
         output: {
             get: getOutput,
+        },
+        election: {
+            candidates: getCandidates,
         }
     };
 };
@@ -235,6 +238,10 @@ function getCert(symbol, type) {
 
 function getOutput(hash, index) {
     return get(`${REMOTE}v2/output/${hash}/${index}`);
+}
+
+function getCandidates() {
+    return get(`${REMOTE}v2/election/candidates`);
 }
 
 function get(url, parameters) {
