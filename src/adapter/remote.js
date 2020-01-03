@@ -75,8 +75,7 @@ module.exports = (url) => {
             get: getOutput,
         },
         election: {
-            candidates: getCandidates,
-            earlybirdCandidates: getEarlybirdCandidates,
+            electionInfo: getElectionInfo,
         }
     };
 };
@@ -241,12 +240,8 @@ function getOutput(hash, index) {
     return get(`${REMOTE}v2/output/${hash}/${index}`);
 }
 
-function getCandidates() {
-    return get(`${REMOTE}v2/election/candidates`);
-}
-
-function getEarlybirdCandidates() {
-    return get(`${REMOTE}v2/election/candidates/earlybird`);
+function getElectionInfo() {
+    return get(`${REMOTE}v2/election/info`);
 }
 
 function get(url, parameters) {
