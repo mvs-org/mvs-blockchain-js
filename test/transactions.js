@@ -3,13 +3,12 @@ var chai = require("chai"),
     chaiAsPromised = require("chai-as-promised"),
     should = chai.should(),
     Blockchain = new require('../')({
-        network: 'testnet'
+        network: 'testnet',
     });
 
 chai.use(chaiAsPromised);
 
 describe('Transactions', function() {
-
     it('Get transaction', () => {
         return Blockchain.transaction.get("d4d612297cbecbc2d6438403e751ca83b3eedc58966033016e52889a9a86062e")
             .then((tx) => tx.block)
