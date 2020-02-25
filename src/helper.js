@@ -28,17 +28,21 @@ function extractAvatars(outputs) {
     });
 }
 
-function calculateBalancesFromUtxo(utxo, addresses, height, init) {
+function calculateBalancesFromUtxo(utxo, addresses, height, init, min_confirmations) {
     if (init == undefined) init = {
         ETP: {
             available: 0,
             frozen: 0,
-            decimals: 8
+            decimals: 8,
         },
         MST: {},
-        MIT: []
-    };
+        MIT: [],
+    }
+    if (min_confirmations === undefined) {
+        min_confirmations = 0
+    }
     return utxo.reduce((acc, output) => {
+        output.confirmed = min_confirmations <= 0 || min_confirmations > 0 && output.height + min_confirmations >= height
         if (addresses.indexOf(output.address) !== -1) {
             switch (output.attachment.type) {
                 case Metaverse.constants.ATTACHMENT.TYPE.MST:
@@ -48,7 +52,7 @@ function calculateBalancesFromUtxo(utxo, addresses, height, init) {
                         acc.MST[output.attachment.symbol] = {
                             available: 0,
                             frozen: 0,
-                            decimals: output.attachment.decimals
+                            decimals: output.attachment.decimals,
                         };
                     let available = Metaverse.output.assetSpendable(output, output.height, height);
                     acc.MST[output.attachment.symbol].available += available;
@@ -61,49 +65,64 @@ function calculateBalancesFromUtxo(utxo, addresses, height, init) {
                         address: output.attachment.address,
                         content: output.attachment.content,
                         owner: output.attachment.to_did,
-                        status: output.attachment.status
+                        status: output.attachment.status,
                     });
                     break;
             }
             if (output.value) {
-                if (output.locked_until > height)
-                    acc['ETP'].frozen += output.value;
-                else
-                    acc['ETP'].available += output.value;
+                if (output.locked_until > height) {
+                    acc.ETP.frozen += output.value;
+                } else {
+                    if (min_confirmations > 0 && output.height + min_confirmations < height) {
+                        acc.ETP.confirming = acc.ETP.confirming ? acc.ETP.confirming + output.value : output.value
+                    } else {
+                        acc.ETP.available += output.value;
+                    }
+                }
             }
         }
         return acc;
     }, init);
 }
 
-function calculateAddressesBalancesFromUtxo(utxo, addresses, height, init) {
+function calculateAddressesBalancesFromUtxo(utxo, addresses, height, init, min_confirmations) {
     if (init == undefined) init = {};
+    if (min_confirmations === undefined) {
+        min_confirmations = 0
+    }
     return utxo.reduce((acc, output) => {
         if (acc[output.address] == undefined)
             acc[output.address] = {
                 ETP: {
                     available: 0,
+                    unconfirmed: 0,
                     frozen: 0,
-                    decimals: 8
+                    decimals: 8,
                 },
                 MST: {},
                 MIT: [],
-                AVATAR: ""
+                AVATAR: '',
             };
+        output.confirmed = min_confirmations <= 0 || (min_confirmations > 0 && output.height + min_confirmations <= height)
         if (addresses.indexOf(output.address) !== -1) {
             switch (output.attachment.type) {
                 case Metaverse.constants.ATTACHMENT.TYPE.MST:
                 case 'asset-transfer':
                 case 'asset-issue':
-                    if (acc[output.address]['MST'][output.attachment.symbol] == undefined)
-                        acc[output.address]['MST'][output.attachment.symbol] = {
+                    if (acc[output.address].MST[output.attachment.symbol] == undefined)
+                        acc[output.address].MST[output.attachment.symbol] = {
                             available: 0,
                             frozen: 0,
-                            decimals: output.attachment.decimals
+                            unconfirmed: 0,
+                            decimals: output.attachment.decimals,
                         };
-                    let available = Metaverse.output.assetSpendable(output, output.height, height);
-                    acc[output.address]['MST'][output.attachment.symbol].available += available;
-                    acc[output.address]['MST'][output.attachment.symbol].frozen += output.attachment.quantity - available;
+                    let available = Metaverse.output.assetSpendable(output, output.height, height)
+                    if (!output.confirmed) {
+                        acc[output.address].MST[output.attachment.symbol].unconfirmed += available
+                    } else {
+                        acc[output.address].MST[output.attachment.symbol].available += available
+                    }
+                    acc[output.address].MST[output.attachment.symbol].frozen += output.attachment.quantity - available
                     break;
                 case Metaverse.constants.ATTACHMENT.TYPE.MIT:
                 case 'mit':
@@ -112,7 +131,8 @@ function calculateAddressesBalancesFromUtxo(utxo, addresses, height, init) {
                         address: output.attachment.address,
                         content: output.attachment.content,
                         owner: output.attachment.to_did,
-                        status: output.attachment.status
+                        status: output.attachment.status,
+                        confirmed: output.confirmed,
                     });
                     break;
                 case Metaverse.constants.ATTACHMENT.TYPE.AVATAR:
@@ -121,10 +141,15 @@ function calculateAddressesBalancesFromUtxo(utxo, addresses, height, init) {
                     break;
             }
             if (output.value) {
-                if (output.locked_until > height)
-                    acc[output.address]['ETP'].frozen += output.value;
-                else
-                    acc[output.address]['ETP'].available += output.value;
+                if (output.locked_until > height) {
+                    acc[output.address].ETP.frozen += output.value
+                } else {
+                    if (!output.confirmed) {
+                        acc[output.address].ETP.unconfirmed += output.value
+                    } else {
+                        acc[output.address].ETP.available += output.value;
+                    }
+                }
             }
         }
         return acc;
