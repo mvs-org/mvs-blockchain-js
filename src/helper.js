@@ -32,6 +32,7 @@ function calculateBalancesFromUtxo(utxo, addresses, height, init, min_confirmati
     if (init == undefined) init = {
         ETP: {
             available: 0,
+            unconfirmed: 0,
             frozen: 0,
             decimals: 8,
         },
@@ -51,6 +52,7 @@ function calculateBalancesFromUtxo(utxo, addresses, height, init, min_confirmati
                     if (acc.MST[output.attachment.symbol] == undefined)
                         acc.MST[output.attachment.symbol] = {
                             available: 0,
+                            unconfirmed: 0,
                             frozen: 0,
                             decimals: output.attachment.decimals,
                         };
@@ -73,7 +75,7 @@ function calculateBalancesFromUtxo(utxo, addresses, height, init, min_confirmati
                 if (output.locked_until > height) {
                     acc.ETP.frozen += output.value;
                 } else {
-                    if (min_confirmations > 0 && output.height + min_confirmations < height) {
+                    if (min_confirmations > 0 && output.height + min_confirmations > height) {
                         acc.ETP.confirming = acc.ETP.confirming ? acc.ETP.confirming + output.value : output.value
                     } else {
                         acc.ETP.available += output.value;
@@ -112,8 +114,8 @@ function calculateAddressesBalancesFromUtxo(utxo, addresses, height, init, min_c
                     if (acc[output.address].MST[output.attachment.symbol] == undefined)
                         acc[output.address].MST[output.attachment.symbol] = {
                             available: 0,
-                            frozen: 0,
                             unconfirmed: 0,
+                            frozen: 0,
                             decimals: output.attachment.decimals,
                         };
                     let available = Metaverse.output.assetSpendable(output, output.height, height)
