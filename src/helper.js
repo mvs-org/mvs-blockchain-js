@@ -75,7 +75,7 @@ function calculateBalancesFromUtxo(utxo, addresses, height, init, min_confirmati
                 if (output.locked_until > height) {
                     acc.ETP.frozen += output.value;
                 } else {
-                    if (min_confirmations > 0 && output.height + min_confirmations > height) {
+                    if (!output.confirmed) {
                         acc.ETP.unconfirmed = acc.ETP.unconfirmed ? acc.ETP.unconfirmed + output.value : output.value
                     } else {
                         acc.ETP.available += output.value;
