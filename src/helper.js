@@ -43,7 +43,7 @@ function calculateBalancesFromUtxo(utxo, addresses, height, init, min_confirmati
         min_confirmations = 0
     }
     return utxo.reduce((acc, output) => {
-        output.confirmed = min_confirmations <= 0 || min_confirmations > 0 && output.height + min_confirmations >= height || output.unconfirmed
+        output.confirmed = min_confirmations <= 0 || min_confirmations > 0 && output.height + min_confirmations >= height || !output.unconfirmed
         if (addresses.indexOf(output.address) !== -1) {
             switch (output.attachment.type) {
                 case Metaverse.constants.ATTACHMENT.TYPE.MST:
@@ -105,7 +105,7 @@ function calculateAddressesBalancesFromUtxo(utxo, addresses, height, init, min_c
                 MIT: [],
                 AVATAR: '',
             };
-        output.confirmed = min_confirmations <= 0 || (min_confirmations > 0 && output.height + min_confirmations <= height) || output.unconfirmed
+        output.confirmed = min_confirmations <= 0 || (min_confirmations > 0 && output.height + min_confirmations <= height) || !output.unconfirmed
         if (addresses.indexOf(output.address) !== -1) {
             switch (output.attachment.type) {
                 case Metaverse.constants.ATTACHMENT.TYPE.MST:
