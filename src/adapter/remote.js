@@ -10,6 +10,7 @@ module.exports = (url) => {
         REMOTE = 'https://explorer.mvs.org/api/';
     return {
         height: getHeight,
+        fee: getFee,
         transaction: {
             get: getTx,
             list: listTxs,
@@ -242,6 +243,10 @@ function getOutput(hash, index) {
 
 function getElectionInfo() {
     return get(`${REMOTE}v2/election/info`);
+}
+
+function getFee() {
+    return get(`${REMOTE}v2/fee`);
 }
 
 function get(url, parameters) {
