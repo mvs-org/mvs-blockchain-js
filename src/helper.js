@@ -57,7 +57,11 @@ function calculateBalancesFromUtxo(utxo, addresses, height, init, min_confirmati
                             decimals: output.attachment.decimals,
                         };
                     let available = Metaverse.output.assetSpendable(output, output.height, height);
-                    acc.MST[output.attachment.symbol].available += available;
+                    if (!output.confirmed) {
+                        acc.MST[output.attachment.symbol].unconfirmed += available
+                    } else {
+                        acc.MST[output.attachment.symbol].available += available
+                    }
                     acc.MST[output.attachment.symbol].frozen += output.attachment.quantity - available;
                     break;
                 case Metaverse.constants.ATTACHMENT.TYPE.MIT:
