@@ -21,11 +21,7 @@ module.exports = (url) => {
             list: listBlocks,
             blocktime: getBlocktime,
         },
-        address: {
-            txs: listAddressTxs,
-        },
         addresses: {
-            txs: listAllAddressesTxs,
             listTxs: listAddressesTxs,
         },
         pricing: {
@@ -164,10 +160,6 @@ function listAvatars() {
     return get(`${REMOTE}avatars`);
 }
 
-function listAddressTxs(address, options) {
-    return listAllAddressesTxs([address], options);
-}
-
 function suggestAvatar(prefix) {
     return get(`${REMOTE}suggest/avatar/${prefix}`);
 }
@@ -198,19 +190,6 @@ function suggestAll(prefix) {
 
 function listBridgeMst() {
     return get(`${REMOTE}bridge/whitelist`);
-}
-
-function listAllAddressesTxs(addresses, options = {}) {
-    let url = `${REMOTE}addresses/txs?addresses=` + addresses.join('&addresses=');
-    if (options.max_height)
-        url += '&max_height=' + options.max_height;
-    if (options.min_height)
-        url += '&min_height=' + options.min_height;
-    if (options.max_time)
-        url += '&max_time=' + options.max_time;
-    if (options.min_time)
-        url += '&min_time=' + options.min_time;
-    return get(url);
 }
 
 function listAddressesTxs(addresses, options = {}) {
