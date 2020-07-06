@@ -126,7 +126,6 @@ function listBlocks(page) {
 
 function getAsset(symbol) {
     return get(`${REMOTE}asset/${symbol}`)
-        .then((result) => result[0]);
 }
 
 function listAssets() {
@@ -139,7 +138,6 @@ function listIcons() {
 
 function getMIT(symbol) {
     return get(`${REMOTE}mits/${symbol}?show_invalidated=1`)
-        .then((result) => result);
 }
 
 function listMIT() {
@@ -148,12 +146,10 @@ function listMIT() {
 
 function getAvatar(symbol, showInvalidated = 0) {
     return get(`${REMOTE}avatar/${symbol}`)
-        .then((result) => result);
 }
 
 function getAvatarAvailable(symbol) {
     return get(`${REMOTE}v2/avatar/available/${symbol}`)
-        .then((result) => result);
 }
 
 function listAvatars() {
