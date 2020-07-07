@@ -37,6 +37,7 @@ module.exports = (url) => {
             get: getAsset,
             list: listAssets,
             icons: listIcons,
+            stake: getStake,
         },
         MIT: {
             get: getMIT,
@@ -222,6 +223,15 @@ function getElectionInfo() {
 
 function getFee() {
     return get(`${REMOTE}v2/fee`);
+}
+
+function getStake(symbol, options) {
+    let url = `${REMOTE}v2/msts/symbol=${symbol}`
+    if (options.limit)
+        url += '&limit=' + options.limit;
+    if (options.lastAddress)
+        url += '&lastAddress=' + options.lastAddress;
+    return get(url);
 }
 
 function get(url, parameters) {
