@@ -225,7 +225,7 @@ function getFee() {
     return get(`${REMOTE}v2/fee`);
 }
 
-function getStake(symbol, options) {
+function getStake(symbol, options = {}) {
     let url = `${REMOTE}v2/msts/symbol=${symbol}`
     if (options.limit)
         url += '&limit=' + options.limit;
