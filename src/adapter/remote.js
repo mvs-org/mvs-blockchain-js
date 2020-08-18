@@ -35,13 +35,13 @@ module.exports = (url) => {
         },
         MST: {
             get: getAsset,
-            list: listAssets,
+            list: listMsts,
             icons: listIcons,
             stake: getStake,
         },
         MIT: {
             get: getMIT,
-            list: listMIT,
+            list: listMits,
         },
         balance: {
             all: helper.balances.all,
@@ -129,8 +129,11 @@ function getAsset(symbol) {
     return get(`${REMOTE}asset/${symbol}`)
 }
 
-function listAssets() {
-    return get(`${REMOTE}assets`);
+function listMsts(last_symbol) {
+    let url = `${REMOTE}v2/msts`;
+    if (last_symbol)
+        url += '?last_symbol=' + last_symbol;
+    return get(url);
 }
 
 function listIcons() {
@@ -141,8 +144,11 @@ function getMIT(symbol) {
     return get(`${REMOTE}mits/${symbol}?show_invalidated=1`)
 }
 
-function listMIT() {
-    return get(`${REMOTE}mits`);
+function listMits(last_known) {
+    let url = `${REMOTE}v2/mits`;
+    if (last_known)
+        url += '?last_known=' + last_known;
+    return get(url);
 }
 
 function getAvatar(symbol, showInvalidated = 0) {
@@ -153,8 +159,11 @@ function getAvatarAvailable(symbol) {
     return get(`${REMOTE}v2/avatar/available/${symbol}`)
 }
 
-function listAvatars() {
-    return get(`${REMOTE}avatars`);
+function listAvatars(last_known) {
+    let url = `${REMOTE}v2/avatars`;
+    if (last_known)
+        url += '?last_known=' + last_known;
+    return get(url);
 }
 
 function suggestAvatar(prefix) {
