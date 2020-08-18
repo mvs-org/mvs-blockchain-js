@@ -35,6 +35,7 @@ module.exports = (url) => {
         },
         MST: {
             get: getAsset,
+            special: listSpecialMsts,
             list: listMsts,
             icons: listIcons,
             stake: getStake,
@@ -127,6 +128,10 @@ function listBlocks(page) {
 
 function getAsset(symbol) {
     return get(`${REMOTE}asset/${symbol}`)
+}
+
+function listSpecialMsts() {
+    return get(`${REMOTE}v2/msts/special`);
 }
 
 function listMsts(last_symbol) {
