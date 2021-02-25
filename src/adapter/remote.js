@@ -75,6 +75,10 @@ module.exports = (url) => {
         },
         election: {
             electionInfo: getElectionInfo,
+        },
+        vm: {
+            swap: getVmSwap,
+            estimate_gas: estimate_gas,
         }
     };
 };
@@ -246,6 +250,14 @@ function getStake(symbol, options = {}) {
     if (options.lastAddress)
         url += '&lastAddress=' + options.lastAddress;
     return get(url);
+}
+
+function getVmSwap() {
+    return get(`${REMOTE}v2/vm/swap`);
+}
+
+function estimate_gas() {
+    return get(`${REMOTE}v2/vm/estimate_gas`);
 }
 
 function get(url, parameters) {
